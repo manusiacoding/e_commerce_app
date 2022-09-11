@@ -4,7 +4,6 @@ import 'package:saldah_shop/screens/category_screen/category_screen.dart';
 import 'package:saldah_shop/screens/home_screen/components/body.dart';
 import 'package:saldah_shop/screens/home_screen/components/home_bottom_menu_icon.dart';
 import 'package:saldah_shop/screens/notification_screen/notification_screen.dart';
-import 'package:saldah_shop/screens/profile_screen/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({super.key});
@@ -16,12 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int bottomNavBarSelectedIndex = 0;
 
-  final _pageOptions = [
-    Body(),
-    CategoryScreen(),
-    NotificationScreen(),
-    ProfileScreen()
-  ];
+  final _pageOptions = [Body(), CategoryScreen(), NotificationScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       items: [
         homeBottomMenuIcon(
-          currentIndex: bottomNavBarSelectedIndex,
-          itemIndex: 0,
-          svgPic: 'assets/svg/home.svg',
-          title: '',
-        ),
-        homeBottomMenuIcon(
           itemIndex: bottomNavBarSelectedIndex,
           currentIndex: 1,
           svgPic: 'assets/svg/category.svg',
+          title: '',
+        ),
+        homeBottomMenuIcon(
+          currentIndex: bottomNavBarSelectedIndex,
+          itemIndex: 0,
+          svgPic: 'assets/svg/home.svg',
           title: '',
         ),
         homeBottomMenuIcon(
@@ -61,12 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
           svgPic: 'assets/svg/notification.svg',
           title: '',
         ),
-        homeBottomMenuIcon(
-          currentIndex: bottomNavBarSelectedIndex,
-          itemIndex: 3,
-          svgPic: 'assets/svg/profile.svg',
-          title: '',
-        ),
+        // homeBottomMenuIcon(
+        //   currentIndex: bottomNavBarSelectedIndex,
+        //   itemIndex: 3,
+        //   svgPic: 'assets/svg/profile.svg',
+        //   title: '',
+        // ),
       ],
     );
   }

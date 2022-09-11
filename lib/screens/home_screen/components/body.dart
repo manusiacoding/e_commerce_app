@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:saldah_shop/app/app_consts.dart';
+import 'package:saldah_shop/screens/cart_screen/cart_screen.dart';
 import 'package:saldah_shop/screens/home_screen/components/category_list.dart';
 import 'package:saldah_shop/screens/home_screen/components/category_title.dart';
 import 'package:saldah_shop/screens/home_screen/components/feed_news.dart';
 import 'package:saldah_shop/screens/home_screen/components/popular_list.dart';
 import 'package:saldah_shop/screens/home_screen/components/search_bar.dart';
+import 'package:saldah_shop/screens/message_screen/message_screen.dart';
 import 'package:saldah_shop/screens/product_screen/list_product.dart';
+import 'package:saldah_shop/screens/profile_screen/profile_screen.dart';
 import 'package:saldah_shop/screens/signin_screen/signin_screen.dart';
 import 'package:saldah_shop/services/user_services.dart';
 
@@ -66,16 +70,14 @@ class _BodyState extends State<Body> {
               //membuat nama email
               accountEmail: Text("manusiacoding29@gmail.com"),
               //memberikan background
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2016/04/24/20/52/laundry-1350593_960_720.jpg"),
-                      fit: BoxFit.cover)),
+              decoration: BoxDecoration(color: AppColors.grey),
             ),
             ListTile(
               leading: Icon(Icons.person),
-              title: Text("Profil"),
-              onTap: () {},
+              title: Text("Profile"),
+              onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  (route) => false),
             ),
             ListTile(
               leading: Icon(Icons.inventory),
@@ -149,11 +151,16 @@ class _BodyState extends State<Body> {
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
-            SvgPicture.asset(
-              'assets/svg/message.svg',
-              height: 20,
-              width: 20,
-              color: Colors.black,
+            IconButton(
+              onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => MessageScreen()),
+                  (route) => false),
+              icon: SvgPicture.asset(
+                'assets/svg/message.svg',
+                height: 17,
+                width: 17,
+                color: Colors.black,
+              ),
             ),
             const Positioned(
               bottom: 32,
@@ -165,16 +172,21 @@ class _BodyState extends State<Body> {
             ),
           ],
         ),
-        const SizedBox(width: 15),
+        const SizedBox(width: 8 ),
         Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
-            SvgPicture.asset(
-              'assets/svg/shop.svg',
-              height: 20,
-              width: 20,
-              color: Colors.black,
+            IconButton(
+              onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => CartScreen()),
+                  (route) => false),
+              icon: SvgPicture.asset(
+                'assets/svg/shop.svg',
+                height: 17,
+                width: 17,
+                color: Colors.black,
+              ),
             ),
             const Positioned(
               bottom: 32,

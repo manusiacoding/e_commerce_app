@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:saldah_shop/screens/home_screen/home_screen.dart';
-import 'package:saldah_shop/screens/product_screen/components/add_product.dart';
+import 'package:saldah_shop/screens/product_screen/add_product.dart';
 
 class ListProductScreen extends StatefulWidget {
   const ListProductScreen({super.key});
