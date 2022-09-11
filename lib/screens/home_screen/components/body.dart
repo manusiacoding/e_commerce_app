@@ -5,6 +5,7 @@ import 'package:saldah_shop/screens/home_screen/components/category_title.dart';
 import 'package:saldah_shop/screens/home_screen/components/feed_news.dart';
 import 'package:saldah_shop/screens/home_screen/components/popular_list.dart';
 import 'package:saldah_shop/screens/home_screen/components/search_bar.dart';
+import 'package:saldah_shop/screens/product_screen/list_product.dart';
 import 'package:saldah_shop/screens/signin_screen/signin_screen.dart';
 import 'package:saldah_shop/services/user_services.dart';
 
@@ -20,29 +21,31 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: _buildDrawer(),
-      appBar: appBar(),
-      body: const CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(height: 15),
-          ),
-          SearchBar(),
-          SliverToBoxAdapter(
-            child: SizedBox(height: 20),
-          ),
-          FeedNews(),
-          SliverToBoxAdapter(
-            child: SizedBox(height: 15),
-          ),
-          CategoryTitle(title: 'Category', trailingTitle: 'View All'),
-          HomeCategoryList(),
-          CategoryTitle(title: 'Popular', trailingTitle: 'View All'),
-          HomePopularList(),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        key: scaffoldKey,
+        drawer: _buildDrawer(),
+        appBar: appBar(),
+        body: const CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: SizedBox(height: 15),
+            ),
+            SearchBar(),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 20),
+            ),
+            FeedNews(),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 15),
+            ),
+            CategoryTitle(title: 'Category', trailingTitle: 'View All'),
+            HomeCategoryList(),
+            CategoryTitle(title: 'Popular', trailingTitle: 'View All'),
+            HomePopularList(),
+          ],
+        ),
       ),
     );
   }
@@ -56,12 +59,12 @@ class _BodyState extends State<Body> {
             UserAccountsDrawerHeader(
               //membuat gambar profil
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/pictures/1.png'),
+                backgroundImage: AssetImage('assets/pictures/unnamed.jpg'),
               ),
               //membuat nama akun
-              accountName: Text("Sahretech"),
+              accountName: Text("Fawwaz Hudzalfah Saputra"),
               //membuat nama email
-              accountEmail: Text("ig: @sahretech"),
+              accountEmail: Text("manusiacoding29@gmail.com"),
               //memberikan background
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -70,29 +73,31 @@ class _BodyState extends State<Body> {
                       fit: BoxFit.cover)),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text("Beranda"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.people),
-              title: Text("Pegawai"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.money),
-              title: Text("Transaksi"),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.emoji_emotions),
+              leading: Icon(Icons.person),
               title: Text("Profil"),
               onTap: () {},
             ),
             ListTile(
+              leading: Icon(Icons.inventory),
+              title: Text("My Products"),
+              onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => ListProductScreen()),
+                  (route) => false),
+            ),
+            ListTile(
+              leading: Icon(Icons.list_alt),
+              title: Text("My Orders"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.checklist),
+              title: Text("My Wishlist"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
               leading: Icon(Icons.info),
-              title: Text("Tentang"),
+              title: Text("About"),
               onTap: () {},
             ),
             ListTile(
