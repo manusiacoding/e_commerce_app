@@ -38,15 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       items: [
         homeBottomMenuIcon(
-          itemIndex: bottomNavBarSelectedIndex,
-          currentIndex: 1,
-          svgPic: 'assets/svg/category.svg',
-          title: '',
-        ),
-        homeBottomMenuIcon(
           currentIndex: bottomNavBarSelectedIndex,
           itemIndex: 0,
           svgPic: 'assets/svg/home.svg',
+          title: '',
+        ),
+        homeBottomMenuIcon(
+          itemIndex: bottomNavBarSelectedIndex,
+          currentIndex: 1,
+          svgPic: 'assets/svg/category.svg',
           title: '',
         ),
         homeBottomMenuIcon(

@@ -17,8 +17,10 @@ class AddProductScreen extends StatelessWidget {
               icon: Icon(Icons.arrow_back),
               color: Colors.black),
         ),
-        body: Center(
-          child: Text('Add Product Screen'),
+        body: ListView(
+          children: <Widget>[
+            //
+          ],
         ),
       ),
     );
