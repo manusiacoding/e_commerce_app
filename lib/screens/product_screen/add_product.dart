@@ -1,8 +1,8 @@
-// import 'dart:io';
+import 'dart:io';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:saldah_shop/app/app_consts.dart';
 import 'package:saldah_shop/screens/product_screen/list_product.dart';
 import 'package:saldah_shop/size_config.dart';
@@ -24,17 +24,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
       qty = TextEditingController(),
       description = TextEditingController();
   bool loading = false;
-  // File? _imageFile;
-  // final _picker = ImagePicker();
+  File? _imageFile;
+  final _picker = ImagePicker();
 
-  // Future getImage() async {
-  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _imageFile = File(pickedFile.path);
-  //     });
-  //   }
-  // }
+  Future getImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +61,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 200,
-                  // decoration: BoxDecoration(
-                  //     image: _imageFile == null
-                  //         ? null
-                  //         : DecorationImage(
-                  //             image: FileImage(_imageFile ?? File('')),
-                  //             fit: BoxFit.cover,
-                  //           )),
+                  decoration: BoxDecoration(
+                      image: _imageFile == null
+                          ? null
+                          : DecorationImage(
+                              image: FileImage(_imageFile ?? File('')),
+                              fit: BoxFit.cover,
+                            )),
                   child: Center(
                     child: IconButton(
                       icon: Icon(Icons.image, size: 50, color: Colors.black38),
                       onPressed: () {
-                        // getImage();
+                        getImage();
                       },
                     ),
                   ),
@@ -159,7 +159,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: getProportionateScreenHeight(30)),
+                        SizedBox(height: getProportionateScreenHeight(25)),
                         Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             child: SizedBox(
