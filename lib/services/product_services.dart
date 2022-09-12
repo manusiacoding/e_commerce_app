@@ -39,7 +39,7 @@ Future<ApiResponse> getProducts() async {
   return apiResponse;
 }
 
-Future<ApiResponse> createPost(String name, String price, String qty,
+Future<ApiResponse> createProduct(String name, String price, String qty,
     String type, String description, String? image) async {
   ApiResponse apiResponse = ApiResponse();
   try {
