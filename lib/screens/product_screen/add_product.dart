@@ -130,7 +130,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           popupProps: PopupProps.menu(
                             showSelectedItems: true,
                           ),
-                          items: ["Brazil", "Italia", "Tunisia", 'Canada'],
+                          items: ["Shirt", "Dress", "Jeans", 'Shoes', 'Hat'],
                           dropdownDecoratorProps: DropDownDecoratorProps(
                             dropdownSearchDecoration: InputDecoration(
                               hintText: "Product Type",
