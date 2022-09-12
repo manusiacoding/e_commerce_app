@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^1.1.5
   http: ^0.13.5
   shared_preferences: ^2.0.15
+  dropdown_search: ^5.0.2
 
 flutter_icons:
   android: true
@@ -63,6 +64,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.10.0
+  image_pickers: ^2.0.0+2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

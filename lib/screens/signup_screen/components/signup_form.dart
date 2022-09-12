@@ -21,7 +21,7 @@ class _SignUpFormState extends State<SignUpForm> {
   // String? email;
   // String? password;
   // String? conform_password;
-  bool remember = false;
+  // bool remember = false;
   bool loading = false;
   final List<String?> errors = [];
   TextEditingController name = TextEditingController(),
