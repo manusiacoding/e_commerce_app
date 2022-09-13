@@ -47,7 +47,7 @@ class _BodyState extends State<Body> {
             ),
             CategoryTitle(title: 'Category', trailingTitle: 'View All'),
             HomeCategoryList(),
-            CategoryTitle(title: 'New Products', trailingTitle: 'View All'),
+            CategoryTitle(title: 'Popular', trailingTitle: 'View All'),
             HomePopularList(),
           ],
         ),
@@ -107,7 +107,7 @@ class _BodyState extends State<Body> {
             ),
           ],
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 8 ),
         Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
