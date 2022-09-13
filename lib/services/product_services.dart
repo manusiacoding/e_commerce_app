@@ -39,7 +39,7 @@ Future<ApiResponse> getProducts() async {
   return apiResponse;
 }
 
-Future<ApiResponse> createProduct(String name, String price, String qty,
+Future<ApiResponse> createProduct(String name, String price, String stock,
     String type, String description, String? image) async {
   ApiResponse apiResponse = ApiResponse();
   try {
@@ -54,7 +54,7 @@ Future<ApiResponse> createProduct(String name, String price, String qty,
           ? {
               'name': name,
               'price': price,
-              'qty': qty,
+              'stock': stock,
               'type': type,
               'description': description,
               'image': image,
@@ -62,7 +62,7 @@ Future<ApiResponse> createProduct(String name, String price, String qty,
           : {
               'name': name,
               'price': price,
-              'qty': qty,
+              'stock': stock,
               'type': type,
               'description': description,
             },
@@ -90,7 +90,7 @@ Future<ApiResponse> createProduct(String name, String price, String qty,
 }
 
 Future<ApiResponse> editProduct(int productId, String name, String price,
-    String qty, String type, String description) async {
+    String stock, String type, String description) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
@@ -103,7 +103,7 @@ Future<ApiResponse> editProduct(int productId, String name, String price,
       body: {
         'name': name,
         'price': price,
-        'qty': qty,
+        'stock': stock,
         'type': type,
         'description': description,
       },

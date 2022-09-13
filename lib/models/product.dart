@@ -4,7 +4,7 @@ class Product {
   int? id;
   String? name;
   String? price;
-  String? qty;
+  String? stock;
   String? type;
   String? description;
   String? image;
@@ -17,7 +17,7 @@ class Product {
     this.id,
     this.name,
     this.price,
-    this.qty,
+    this.stock,
     this.type,
     this.description,
     this.image,
@@ -32,7 +32,7 @@ class Product {
       id: json['id'],
       name: json['name'],
       price: json['price'],
-      qty: json['qty'],
+      stock: json['stock'],
       type: json['type'],
       description: json['description'],
       image: json['image'],

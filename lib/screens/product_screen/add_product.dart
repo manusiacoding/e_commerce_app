@@ -1,13 +1,18 @@
 import 'dart:io';
 
-import 'package:dropdown_search/dropdown_search.dart';
+// import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:saldah_shop/app/app_consts.dart';
+import 'package:saldah_shop/models/api_response.dart';
+import 'package:saldah_shop/screens/home_screen/home_screen.dart';
 import 'package:saldah_shop/screens/product_screen/list_product.dart';
+import 'package:saldah_shop/screens/signin_screen/signin_screen.dart';
+import 'package:saldah_shop/services/product_services.dart';
+import 'package:saldah_shop/services/user_services.dart';
 import 'package:saldah_shop/size_config.dart';
 
-const List<String> list = <String>['Shirt', 'Dress', 'Jeans', 'Shoes', 'Hat'];
+const list = ['Shirt', 'Dress', 'Jeans', 'Shoes', 'Hat'];
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -21,7 +26,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   // SearchController type = SearchController;
   final TextEditingController name = TextEditingController(),
       price = TextEditingController(),
-      qty = TextEditingController(),
+      stock = TextEditingController(),
+      type = TextEditingController(),
       description = TextEditingController();
   bool loading = false;
   File? _imageFile;
@@ -32,6 +38,28 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _createProduct() async {
+    String? image = _imageFile == null ? null : getStringImage(_imageFile);
+    ApiResponse response = await createProduct(
+        name.text, price.text, stock.text, type.text, description.text, image);
+
+    if (response.error == null) {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+                (route) => false)
+          });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+      setState(() {
+        loading = !loading;
       });
     }
   }
@@ -58,17 +86,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
             )
           : ListView(
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      image: _imageFile == null
-                          ? null
-                          : DecorationImage(
-                              image: FileImage(_imageFile ?? File('')),
-                              fit: BoxFit.cover,
-                            )),
-                  child: Center(
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        image: _imageFile == null
+                            ? null
+                            : DecorationImage(
+                                image: FileImage(_imageFile ?? File('')),
+                                fit: BoxFit.cover,
+                              )),
                     child: IconButton(
                       icon: Icon(Icons.image, size: 50, color: Colors.black38),
                       onPressed: () {
@@ -113,12 +142,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         ),
                         SizedBox(height: getProportionateScreenHeight(30)),
                         TextFormField(
-                          controller: qty,
+                          controller: stock,
                           keyboardType: TextInputType.text,
                           validator: (val) =>
-                              val!.isEmpty ? 'Product qty is required.' : null,
+                              val!.isEmpty ? 'Product stock is required.' : null,
                           decoration: InputDecoration(
-                            hintText: "Product Qty",
+                            hintText: "Product stock",
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 1, color: AppColors.darkGrey),
@@ -126,22 +155,30 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           ),
                         ),
                         SizedBox(height: getProportionateScreenHeight(30)),
-                        DropdownSearch<String>(
-                          popupProps: PopupProps.menu(
-                            showSelectedItems: true,
-                          ),
-                          items: ["Shirt", "Dress", "Jeans", 'Shoes', 'Hat'],
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              hintText: "Product Type",
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 1, color: AppColors.darkGrey),
-                              ),
+                        TextFormField(
+                          controller: type,
+                          validator: (val) =>
+                              val!.isEmpty ? 'Product type is required.' : null,
+                          decoration: InputDecoration(
+                            suffixIcon: PopupMenuButton<String>(
+                              icon: const Icon(Icons.arrow_drop_down),
+                              onSelected: (String value) {
+                                type.text = value;
+                              },
+                              itemBuilder: (BuildContext context) {
+                                return list
+                                    .map<PopupMenuItem<String>>((String value) {
+                                  return new PopupMenuItem(
+                                      child: new Text(value), value: value);
+                                }).toList();
+                              },
+                            ),
+                            hintText: "Product Type",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: AppColors.darkGrey),
                             ),
                           ),
-                          onChanged: print,
-                          selectedItem: "Brazil",
                         ),
                         SizedBox(height: getProportionateScreenHeight(30)),
                         TextFormField(
@@ -181,6 +218,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     setState(() {
                                       loading = !loading;
                                     });
+                                    _createProduct();
                                   }
                                 },
                               ),
