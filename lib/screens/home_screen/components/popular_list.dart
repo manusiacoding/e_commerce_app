@@ -10,6 +10,7 @@ class HomePopularList extends StatefulWidget {
 }
 
 class _HomePopularListState extends State<HomePopularList> {
+
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
@@ -23,6 +24,7 @@ class _HomePopularListState extends State<HomePopularList> {
         ),
         delegate: SliverChildBuilderDelegate(
           (ctx, i) {
+            // Product product = _productList[i];
             return GestureDetector(
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
