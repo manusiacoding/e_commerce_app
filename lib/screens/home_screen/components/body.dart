@@ -4,6 +4,7 @@ import 'package:saldah_shop/app/app_consts.dart';
 import 'package:saldah_shop/screens/cart_screen/cart_screen.dart';
 import 'package:saldah_shop/screens/home_screen/components/category_list.dart';
 import 'package:saldah_shop/screens/home_screen/components/category_title.dart';
+import 'package:saldah_shop/screens/home_screen/components/drawer.dart';
 import 'package:saldah_shop/screens/home_screen/components/feed_news.dart';
 import 'package:saldah_shop/screens/home_screen/components/popular_list.dart';
 import 'package:saldah_shop/screens/home_screen/components/search_bar.dart';
@@ -28,7 +29,7 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        drawer: _buildDrawer(),
+        drawer: BuildDrawer(),
         appBar: appBar(),
         body: const CustomScrollView(
           physics: BouncingScrollPhysics(),
@@ -48,72 +49,6 @@ class _BodyState extends State<Body> {
             HomeCategoryList(),
             CategoryTitle(title: 'Popular', trailingTitle: 'View All'),
             HomePopularList(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDrawer() {
-    return SizedBox(
-      child: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              //membuat gambar profil
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/pictures/unnamed.jpg'),
-              ),
-              //membuat nama akun
-              accountName: Text("Fawwaz Hudzalfah Saputra"),
-              //membuat nama email
-              accountEmail: Text("manusiacoding29@gmail.com"),
-              //memberikan background
-              decoration: BoxDecoration(color: AppColors.grey),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text("Profile"),
-              onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                  (route) => false),
-            ),
-            ListTile(
-              leading: Icon(Icons.inventory),
-              title: Text("My Products"),
-              onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => ListProductScreen()),
-                  (route) => false),
-            ),
-            ListTile(
-              leading: Icon(Icons.list_alt),
-              title: Text("My Orders"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.checklist),
-              title: Text("My Wishlist"),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text("About"),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.logout_outlined),
-              title: Text("Logout"),
-              onTap: () {
-                logout().then((value) => {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => SignInScreen()),
-                          (route) => false)
-                    });
-              },
-            ),
           ],
         ),
       ),

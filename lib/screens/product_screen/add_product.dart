@@ -7,7 +7,6 @@ import 'package:saldah_shop/app/app_consts.dart';
 import 'package:saldah_shop/models/api_response.dart';
 import 'package:saldah_shop/screens/home_screen/home_screen.dart';
 import 'package:saldah_shop/screens/product_screen/list_product.dart';
-import 'package:saldah_shop/screens/signin_screen/signin_screen.dart';
 import 'package:saldah_shop/services/product_services.dart';
 import 'package:saldah_shop/services/user_services.dart';
 import 'package:saldah_shop/size_config.dart';
@@ -52,7 +51,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => SignInScreen()),
+                MaterialPageRoute(builder: (context) => ListProductScreen()),
                 (route) => false)
           });
     } else {
