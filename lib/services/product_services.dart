@@ -4,26 +4,23 @@ import 'package:saldah_shop/app/app_consts.dart';
 import 'package:saldah_shop/models/api_response.dart';
 import 'package:saldah_shop/models/product.dart';
 import 'package:saldah_shop/services/user_services.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;  
 
 Future<ApiResponse> getProducts() async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.get(
-      Uri.parse(productURL),
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+    final response = await http.get(Uri.parse(productURL),
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
-    switch (response.statusCode) {
+    switch(response.statusCode){
       case 200:
-        apiResponse.data = jsonDecode(response.body)['products']
-            .map((p) => Product.fromJson(p))
-            .toList();
+        apiResponse.data = jsonDecode(response.body)['product'].map((p) => Product.fromJson(p)).toList();
         apiResponse.data as List<dynamic>;
+        // print(jsonDecode(response.body));
         break;
       case 401:
         apiResponse.error = unauthorized;
@@ -32,10 +29,10 @@ Future<ApiResponse> getProducts() async {
         apiResponse.error = somethingWentWrong;
         break;
     }
-  } catch (e) {
-    apiResponse.error = serverError;
   }
-
+  catch (e){
+    apiResponse.error = e.toString();
+  }
   return apiResponse;
 }
 
