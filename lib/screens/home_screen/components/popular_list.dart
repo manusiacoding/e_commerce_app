@@ -1,6 +1,12 @@
+import 'package:saldah_shop/app/app_consts.dart';
 import 'package:saldah_shop/dummy_data.dart';
+import 'package:saldah_shop/models/api_response.dart';
+import 'package:saldah_shop/models/product.dart';
 import 'package:saldah_shop/screens/detail_screen/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:saldah_shop/screens/signin_screen/signin_screen.dart';
+import 'package:saldah_shop/services/product_services.dart';
+import 'package:saldah_shop/services/user_services.dart';
 
 class HomePopularList extends StatefulWidget {
   const HomePopularList({Key? key}) : super(key: key);
@@ -10,6 +16,34 @@ class HomePopularList extends StatefulWidget {
 }
 
 class _HomePopularListState extends State<HomePopularList> {
+  bool loading = true;
+  int userid = 0;
+  List<dynamic> _productList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveProducts();
+  }
+
+  Future<void> retrieveProducts() async {
+    userid = await getUserId();
+    ApiResponse response = await getProducts();
+
+    if (response.error == null) {
+      setState(() {
+        _productList = response.data as List<dynamic>;
+        loading = loading ? !loading : loading;
+      });
+    } else if (response.error == unauthorized) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => SignInScreen()),
+          (route) => false);
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +58,7 @@ class _HomePopularListState extends State<HomePopularList> {
         ),
         delegate: SliverChildBuilderDelegate(
           (ctx, i) {
-            // Product product = _productList[i];
+            Product product = _productList[i];
             return GestureDetector(
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
@@ -48,10 +82,11 @@ class _HomePopularListState extends State<HomePopularList> {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
                             ),
-                            image: DecorationImage(
-                              image: AssetImage(popularList[i].picture),
-                              fit: BoxFit.cover,
-                            ),
+                            image: null,
+                            // product.image != null ? DecorationImage(
+                            //   image: NetworkImage('${product.image}'),
+                            //   fit: BoxFit.cover,
+                            // ) : null,
                           ),
                         ),
                       ),
@@ -64,9 +99,9 @@ class _HomePopularListState extends State<HomePopularList> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(popularList[i].title),
+                              Text('${product.name}'),
                               Text(
-                                '\$${popularList[i].price}',
+                                'Rp ${product.price}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -101,7 +136,7 @@ class _HomePopularListState extends State<HomePopularList> {
               ),
             );
           },
-          childCount: popularList.length,
+          childCount: _productList.length,
         ),
       ),
     );

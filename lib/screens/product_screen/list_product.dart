@@ -16,35 +16,6 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
-  List<dynamic> _productList = [];
-  int userid = 0;
-  bool loading = true;
-
-  Future<void> retrieveProducts() async {
-    userid = await getUserId();
-    ApiResponse response = await getProducts();
-
-    if (response.error == null) {
-      setState(() {
-        _productList = response.data as List<dynamic>;
-        loading = loading ? !loading : loading;
-      });
-    } else if (response.error == unauthorized) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => SignInScreen()),
-          (route) => false);
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('${response.error}')));
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    retrieveProducts();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,17 +31,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
           color: Colors.black,
         ),
       ),
-      body: loading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: _productList.length,
-              itemBuilder: (BuildContext context, int i) {
-                Product product = _productList[i];
-                return Text('${product.name}');
-              },
-            ),
+      body: Center(
+        child: Text('List Product Screen'),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => AddProductScreen()),
